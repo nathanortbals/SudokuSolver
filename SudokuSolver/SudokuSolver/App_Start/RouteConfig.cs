@@ -16,7 +16,7 @@ namespace SudokuSolver
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Sudoku", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
