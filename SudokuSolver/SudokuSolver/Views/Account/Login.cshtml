@@ -7,18 +7,33 @@
 
 <h2>Login</h2>
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+<div class="form">
+    <div class="container">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary("")
+            @Html.ValidationSummary("")
+            <center>
+                <div class="container">
+                    <label><b>Email:</b></label>
 
-    @Html.TextBoxFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email" })
+                    <br />
 
-    @Html.PasswordFor(m => m.Password)
+                    <label><b>Password:</b></label>
 
-    <input type="submit" value="Login" />
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                    <br />
 
-    @Html.ActionLink("Register", "Register");
-}
+                    <button type="submit">Login</button>
+
+                    @Html.ActionLink("Click here to register", "Register")
+
+                </div>
+            </center>
+        }
+    </div>
+</div>
+
 
