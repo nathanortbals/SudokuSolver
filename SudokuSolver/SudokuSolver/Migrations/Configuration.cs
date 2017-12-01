@@ -10,7 +10,6 @@ namespace SudokuSolver.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "SudokuSolver.Models.IdentityModel+ApplicationDbContext";
             AutomaticMigrationDataLossAllowed = true;
         }
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using SudokuSolver.Models;
 using static SudokuSolver.Models.IdentityModel;
 
@@ -54,6 +49,11 @@ namespace SudokuSolver.Controllers
         // Get: Sudoku/Load
         public ActionResult Load()
         {
+            var user = CurrentUser;
+
+            if (user == null)
+                RedirectToAction("Login", "Account");
+            
             return View(CurrentUser);
         }
 
@@ -87,8 +87,12 @@ namespace SudokuSolver.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SavePuzzle(Puzzle puzzle)
         {
-            TryUpdateModel(puzzle);
-            
+            var user = CurrentUser;
+            var oldPuzzle = user.Puzzles.Single(x => x.ID == puzzle.ID);
+            user.Puzzles.Remove(oldPuzzle);
+            user.Puzzles.Add(puzzle);
+            UserManager.Update(user);
+
             return RedirectToAction("Load");
         }
     }

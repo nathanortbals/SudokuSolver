@@ -54,6 +54,22 @@ namespace SudokuSolver.Models
                 }
             }
         }
+
+        public void UpdatePuzzle(Puzzle puzzle)
+        {
+            if (this.ID != puzzle.ID)
+                return;
+
+            LastEdited = DateTime.Now;
+
+            this.Positions.RemoveAll(x => x.PuzzleId == this.ID);
+
+            foreach(Position position in puzzle.Positions)
+            {
+                position.ReassignParent(this);
+                this.Positions.Add(position);
+            }
+        }
     }
 
     public class Position
@@ -80,6 +96,12 @@ namespace SudokuSolver.Models
             this.Y = y;
 
             this.Value = null;
+        }
+
+        public void ReassignParent(Puzzle puzzle)
+        {
+            this.PuzzleId = puzzle.ID;
+            this.Puzzle = puzzle;
         }
     }
 }

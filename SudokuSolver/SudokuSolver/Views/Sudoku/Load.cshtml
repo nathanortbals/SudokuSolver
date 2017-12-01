@@ -19,20 +19,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Puzzles)
+        @if (Model.Puzzles != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastEdited)
-                </td>
-                <td>
-                    @Html.ActionLink("Open", "OpenPuzzle", new { PuzzleID = item.ID })
-                    @Html.ActionLink("Delete", "DeletePuzzle", new { PuzzleID = item.ID })
-                </td>
-            </tr>
+            foreach (var item in Model.Puzzles)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastEdited)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Open", "OpenPuzzle", new { PuzzleID = item.ID })
+                        @Html.ActionLink("Delete", "DeletePuzzle", new { PuzzleID = item.ID })
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
