@@ -1,7 +1,67 @@
-﻿@{
+﻿@model SudokuSolver.Models.Puzzle
+
+@{
     ViewBag.Title = "Play";
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>Play</h2>
+@using (Html.BeginForm("Play", "Sudoku", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(Model => Model.ID)
+    @Html.HiddenFor(Model => Model.User)
+    @Html.HiddenFor(Model => Model.UserID)
+
+    var tbConfig = new { maxlength = "1", size = "2", autocomplete = "off", @onkeyup = "SubmitValidCellValue(event)" };
+    <center>
+        <div>
+            @for (int x = 0; x < Puzzle.SizeX; x++)
+            {
+                if ((x != 0) && (x % Puzzle.BlockSize == 0))
+                {
+                    <br>
+                }
+
+                for (int y = 0; y < Puzzle.SizeY; y++)
+                {
+                    if ((y != 0) && (y % Puzzle.BlockSize == 0))
+                    {
+                        @:&nbsp;
+                    }
+
+                    @Html.TextBoxFor(Model => Model.Positions[x * Puzzle.SizeX + y].Value, tbConfig);
+                }
+                <br>
+            }
+
+        </div>
+    </center>
+
+    <center>
+        <table>
+            <tr>
+                <td>
+                    <center>
+                        <input type="submit" class="BigButton" value="Save Puzzle" formaction='@Url.Action("SavePuzzle", "Sudoku")' />
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </center>
+}
+<script>
+    function SubmitValidCellValue(event)
+	{
+        var value = event.currentTarget.value;
+        if ((value == "") || (1 <= value && value <= 9))
+	    {
+             document.updateForm.submit();
+        }
+	    else
+	    {
+            // If invalid, clear out value on screen
+            event.currentTarget.value = "";
+        }
+    }
+</script>
 

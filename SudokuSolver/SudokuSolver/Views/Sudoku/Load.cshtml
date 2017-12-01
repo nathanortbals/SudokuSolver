@@ -1,0 +1,40 @@
+﻿@model SudokuSolver.Models.IdentityModel.User
+
+@{
+    ViewBag.Title = "Load";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<h2>Load</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Puzzles[0].ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Puzzles[0].LastEdited)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Puzzles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastEdited)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "OpenPuzzle", new { PuzzleID = item.ID })
+                    @Html.ActionLink("Delete", "DeletePuzzle", new { PuzzleID = item.ID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<input type="button" value="New Puzzle" onclick="location.href='@Url.Action("NewPuzzle", "Sudoku")'" />
