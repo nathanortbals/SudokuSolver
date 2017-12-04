@@ -82,15 +82,43 @@ namespace SudokuSolver.Controllers
             return RedirectToAction("Load");
         }
 
+        // Post: Sudoku/Play
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Play(Puzzle puzzle)
+        {
+            return View(puzzle);
+        }
+
+        // Post: Sudoku/SolvePuzzle
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SolvePuzzle(Puzzle puzzle)
+        {
+            var user = CurrentUser;
+            var currentPuzzle = user.Puzzles.Single(x => x.ID == puzzle.ID);
+            currentPuzzle.SyncPuzzle(puzzle);
+
+            if (!currentPuzzle.IsValid())
+            {
+                UserManager.Update(user);
+                return RedirectToAction("Play", new { PuzzleID = currentPuzzle.ID });
+            }
+                
+            currentPuzzle.SolvePuzzle();
+            UserManager.Update(user);
+
+            return RedirectToAction("Play", new { PuzzleID = currentPuzzle.ID });
+        }
+
         // Post: Sudoku/SavePuzzle
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SavePuzzle(Puzzle puzzle)
         {
             var user = CurrentUser;
-            var oldPuzzle = user.Puzzles.Single(x => x.ID == puzzle.ID);
-            user.Puzzles.Remove(oldPuzzle);
-            user.Puzzles.Add(puzzle);
+            var currentPuzzle = user.Puzzles.Single(x => x.ID == puzzle.ID);
+            currentPuzzle.SyncPuzzle(puzzle);
             UserManager.Update(user);
 
             return RedirectToAction("Load");

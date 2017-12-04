@@ -175,6 +175,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Css\Layout.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Sudoku\Play.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -198,6 +199,10 @@
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\SudokuModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BacktrackingSearch.cs" />
+    <Compile Include="Service\Node.cs" />
+    <Compile Include="Service\Position.cs" />
+    <Compile Include="Service\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -218,7 +223,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

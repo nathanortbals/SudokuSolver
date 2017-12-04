@@ -1,39 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width" />
-    <style>
-        form {
-            border: 3px solid #f1f1f1;
-            width: 50%;
-            display: block;
-            margin: 10px auto;
-            font-family: Verdana;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 50%;
-            display: block;
-            margin: 10px auto;
-        }
-
-            button:hover {
-                opacity: 0.8;
-            }
-
-        h2 {
-            text-align: center;
-            font-family: Verdana;
-        }
-    </style>
+    <link rel="stylesheet" href=@Url.Content("~/Css/Layout.css") />
     <title>@ViewBag.Title</title>
 </head>
+
 <body>
     @if (User.Identity.IsAuthenticated)
     {
@@ -42,7 +15,7 @@
             @Html.AntiForgeryToken()
             @Html.Label("Hello " + User.Identity.Name + "!");
 
-            <input type="submit" value="LogOff">
+            <input type="submit" value="LogOff" class="button">
         }
     }
     else
@@ -60,4 +33,5 @@
         @RenderBody()
     </div>
 </body>
+
 </html>

@@ -5,7 +5,7 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-@using (Html.BeginForm("Play", "Sudoku", FormMethod.Post, new { autocomplete = "off" }))
+@using (Html.BeginForm("Play", "Sudoku", FormMethod.Post, new { name = "updateForm", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(Model => Model.ID)
@@ -29,6 +29,8 @@
                         @:&nbsp;
                     }
 
+                    @Html.HiddenFor(Model => Model.Positions[x * Puzzle.SizeX + y].X);
+                    @Html.HiddenFor(Model => Model.Positions[x * Puzzle.SizeX + y].Y);
                     @Html.TextBoxFor(Model => Model.Positions[x * Puzzle.SizeX + y].Value, tbConfig);
                 }
                 <br>
@@ -42,7 +44,20 @@
             <tr>
                 <td>
                     <center>
+                        @if (!Model.IsValid())
+                        {
+                            @Html.Label("Puzzle has errors")
+                        }
+                        else if (Model.IsSolved())
+                        {
+                            @Html.Label("Puzzle is solved!")
+                        }  
+                    </center>
+                </td>
+                <td>
+                    <center>
                         <input type="submit" class="BigButton" value="Save Puzzle" formaction='@Url.Action("SavePuzzle", "Sudoku")' />
+                        <input type="submit" class="BigButton" value="Solve Puzzle" formaction='@Url.Action("SolvePuzzle", "Sudoku")' />
                     </center>
                 </td>
             </tr>

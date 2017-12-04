@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.Entity;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity.EntityFramework;
 using static SudokuSolver.Models.IdentityModel;
 using System.ComponentModel;
+using SudokuSolver.ServiceLayer;
 
 namespace SudokuSolver.Models
 {
@@ -44,10 +42,31 @@ namespace SudokuSolver.Models
             this.UserID = user.Id;
             this.User = user;
 
-            Positions = new List<Position>();
-            for(int x = 0; x < SizeX; x++)
+            GetBlankPuzzle();
+        }
+
+        public void SyncPuzzle(Puzzle newPuzzle)
+        {
+            for (int x = 0; x < SizeX; x++)
             {
-                for(int y = 0; y < SizeY; y++)
+                for (int y = 0; y < SizeY; y++)
+                {
+                    Position currentPosition = this.Positions.Single(p => p.X == x && p.Y == y);
+                    Position newPosition = newPuzzle.Positions.Single(p => p.X == x && p.Y == y);
+                    if (currentPosition.Value != newPosition.Value)
+                    {
+                        currentPosition.Value = newPosition.Value; 
+                    }
+                }
+            }
+        }
+
+        public void GetBlankPuzzle()
+        {
+            Positions = new List<Position>();
+            for (int x = 0; x < SizeX; x++)
+            {
+                for (int y = 0; y < SizeY; y++)
                 {
                     Position position = new Position(this, x, y);
                     this.Positions.Add(position);
@@ -55,20 +74,98 @@ namespace SudokuSolver.Models
             }
         }
 
-        public void UpdatePuzzle(Puzzle puzzle)
+        public void SolvePuzzle()
         {
-            if (this.ID != puzzle.ID)
-                return;
+            Node node = new Node(this);
+            var result = BacktrackingSearch.Search(node);
 
-            LastEdited = DateTime.Now;
+            SyncPuzzle(result.GetModel());
+        }
 
-            this.Positions.RemoveAll(x => x.PuzzleId == this.ID);
+        public bool IsSolved()
+        {
+            Node node = new Node(this);
 
-            foreach(Position position in puzzle.Positions)
+            if (node.IsGoalNode())
+                return true;
+            else
+                return false;
+        }
+
+        public bool IsValid()
+        {
+            if (AreRowsValid() && AreColumnsValid() && AreBlocksValid())
+                return true;
+            else
+                return false;
+        }
+
+        private bool AreRowsValid()
+        {
+            for (int x = 0; x < SizeX; x++)
             {
-                position.ReassignParent(this);
-                this.Positions.Add(position);
+                List<int> values = new List<int>();
+
+                for (int y = 0; y < SizeY; y++)
+                {
+                    if (Positions[x * SizeX + y].Value.HasValue)
+                        values.Add(Positions[x * SizeX + y].Value.Value);
+                }
+
+                if (DuplicatesInList(values))
+                    return false;
             }
+
+            return true;
+        }
+
+        private bool AreColumnsValid()
+        {
+            for (int y = 0; y < SizeY; y++)
+            {
+                List<int> values = new List<int>();
+
+                for (int x = 0; x < SizeX; x++)
+                {
+                    if (Positions[x * SizeX + y].Value.HasValue)
+                        values.Add(Positions[x * SizeX + y].Value.Value);
+                }
+
+                if (DuplicatesInList(values))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool AreBlocksValid()
+        {
+            for (int blockX = 0; blockX < (SizeX / BlockSize); blockX++)
+            {
+                for (int blockY = 0; blockY < (SizeY / BlockSize); blockY++)
+                {
+                    List<int> values = new List<int>();
+
+                    for (int x = blockX * 3; x < (blockX + 1) * 3; x++)
+                    {
+                        for (int y = blockY * 3; y < (blockY + 1) * 3; y++)
+                        {
+                            if (Positions[x * SizeX + y].Value.HasValue)
+                                values.Add(Positions[x * SizeX + y].Value.Value);
+                        }
+                    }
+
+                    if (DuplicatesInList(values))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static bool DuplicatesInList(List<int> values)
+        {
+            return values.GroupBy(x => x).Any(x => x.Count() > 1);
         }
     }
 
@@ -103,5 +200,7 @@ namespace SudokuSolver.Models
             this.PuzzleId = puzzle.ID;
             this.Puzzle = puzzle;
         }
+
+
     }
 }

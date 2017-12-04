@@ -18,8 +18,6 @@ namespace SudokuSolver.Models
                 var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
                 return userIdentity;
             }
-
-
         }
 
         public class ApplicationDbContext : IdentityDbContext<User>
