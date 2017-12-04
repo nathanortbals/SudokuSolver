@@ -13,19 +13,8 @@
         using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @Html.Label("Hello " + User.Identity.Name + "!");
 
-            <input type="submit" value="LogOff" class="button">
-        }
-    }
-    else
-    {
-        using (Html.BeginForm("Register", "Account", FormMethod.Get))
-        {
-            @Html.AntiForgeryToken()
-            @Html.Label("Not logged in");
-
-            <input type="submit" value="Register">
+            <button input type="submit" value="LogOff" class="button">Log Off</button>
         }
     }
 
