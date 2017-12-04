@@ -1,16 +1,21 @@
 ﻿form {
-    border: 3px solid #f1f1f1;
+    border: 2px solid cornflowerblue;
     width: 50%;
     display: block;
     margin: 10px auto;
     font-family: Verdana;
 }
 
+p.description {
+    text-align: center;
+    padding: 50px 50px;
+    font-family: Verdana;
+}
+
 button {
-    background-color: #4CAF50;
+    background-color: cornflowerblue;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 50%;
@@ -18,9 +23,9 @@ button {
     margin: 10px auto;
 }
 
-    button:hover {
-        opacity: 0.8;
-    }
+button:hover {
+   opacity: 0.8;
+}
 
 h2 {
     text-align: center;
@@ -41,9 +46,9 @@ table.tableWrapper {
     align-self: center;
 }
 
-    table.tableWrapper td {
-        border-bottom: 2px solid cornflowerblue;
-    }
+table.tableWrapper td {
+    border-bottom: 2px solid cornflowerblue;
+}
 
 .puzzleTableRow {
     border-bottom: 1px solid black;

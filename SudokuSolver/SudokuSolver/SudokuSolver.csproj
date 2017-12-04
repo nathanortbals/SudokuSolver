@@ -190,10 +190,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712012032380_Initial.cs" />
-    <Compile Include="Migrations\201712012032380_Initial.Designer.cs">
-      <DependentUpon>201712012032380_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\IdentityModel.cs" />
