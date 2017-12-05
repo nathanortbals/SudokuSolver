@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    
+
     @if (User.Identity.IsAuthenticated)
     {
         using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
@@ -21,6 +21,9 @@
 
     <div>
         @RenderBody()
+    </div>
+    <div id="bg">
+        <img src="~/Css/images/bg-sudoku.jpg" alt="">
     </div>
 </body>
 
