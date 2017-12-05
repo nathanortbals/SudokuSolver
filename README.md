@@ -65,3 +65,25 @@ ALTER TABLE [dbo].[Positions]
  ### Entity Relation Diagram
  ![Alt ERD](https://github.com/nathanortbals/SudokuSolver/blob/master/ERD.jpg)
  
+ ### CRUD Support
+ 
+ #### Create
+ 
+ 1. When a user registers, an AspNetUsers row is created
+ 2. When a puzzle is create, a Puzzle row is created along with 81 Position rows (9 x 9)
+ 
+ #### Read
+ 
+ 1. When the cookie is read by the application, it reads the user table for the user information.
+ 2. All Puzzle rows belong to an AspNetUser are read on the "Load" screen.
+ 3. All Positions belonging to a Puzzle are read when the puzzle is loaded.
+ 
+ #### Update
+ 
+ 1. When a Puzzle's positions are modified and saved, all changed positions' values are updated.
+ 
+ #### Delete
+ 
+ 1. When a Puzzle is deleted, the Puzzle row and all it's positions are deleted.
+ 
+ 
