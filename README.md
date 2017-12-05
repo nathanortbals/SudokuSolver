@@ -62,4 +62,6 @@ ALTER TABLE [dbo].[Positions]
     ADD CONSTRAINT [FK_dbo.Positions_dbo.Puzzles_PuzzleId] FOREIGN KEY ([PuzzleId]) REFERENCES [dbo].[Puzzles] ([ID]) ON DELETE CASCADE;
  ```
  
+ ### Entity Relation Diagram
+ ![Alt ERD](https://github.com/nathanortbals/SudokuSolver/blob/master/ERD.jpg)
  
