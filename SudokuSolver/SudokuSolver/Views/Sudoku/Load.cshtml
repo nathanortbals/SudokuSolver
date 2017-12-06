@@ -5,39 +5,37 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>Load</h2>
 <center>
-    <table class="tableWrapper">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Puzzles[0].ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Puzzles[0].LastEdited)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Puzzles)
-            {
-                <tr class="puzzleTableRow">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastEdited)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "OpenPuzzle", new { PuzzleID = item.ID })
-                        @Html.ActionLink("Delete", "DeletePuzzle", new { PuzzleID = item.ID })
-                    </td>
+    <h2>Current Puzzles</h2>
+
+    <div class="section">
+        <table class="tableWrapper">
+            <thead>
+                <tr>
+                    <th><label>Id</label></th>
+                    <th><label>Last Edited</label></th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Puzzles)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+
+                        <td>@Html.DisplayFor(modelItem => item.LastEdited)</td>
+
+                        <td>
+                            <center>
+                                <button class="smallButton" onclick="location.href='@Url.Action("OpenPuzzle", "Sudoku", new { PuzzleID = item.ID })'">Open</button>
+                                <button class="smallButton" onclick="location.href='@Url.Action("DeletePuzzle", "Sudoku", new { PuzzleID = item.ID })'">Delete</button>
+                            </center>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button onclick="location.href='@Url.Action("NewPuzzle", "Sudoku")'">New Puzzle</button>
+    </div>
 </center>
-<div class="butonWrapper">
-    <input type="button" id="newPuzzleButton" value="New Puzzle" onclick="location.href='@Url.Action("NewPuzzle", "Sudoku")'" />
-</div>

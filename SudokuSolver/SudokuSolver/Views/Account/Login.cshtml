@@ -5,35 +5,26 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>Login</h2>
+<center>
+    <h2>Login</h2>
 
-<div class="form">
-    <div class="container">
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "section" }))
+    {
+        @Html.AntiForgeryToken()
 
-            @Html.ValidationSummary("")
-            <center>
-                <div class="container">
-                    <label><b>Email:</b></label>
-                    
-                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email" })
-                    <br />
+        @Html.ValidationSummary("")
 
-                    <label><b>Password:</b></label>
+        <label>Email:</label> 
+        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "loginTextBox"})
 
-                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
-                    <br />
+        <label>Password:</label> 
+        @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "loginTextBox" })
 
-                    <button type="submit">Login</button>
+        <button type="submit">Login</button>
 
-                    <button>@Html.ActionLink("Register", "Register")</button>
-                </div>
-            </center>
-        }
-    </div>
-</div>
+        <button type="button" onclick="location.href='@Url.Action("Register", "Account")'">Register</button>
+    }
+</center>
 
 <p class="description">This is a simple MVC asp.net app that solves sudoku puzzles. It makes use of constraint-satisfaction backtracking search with degree heuristics to solve every possible puzzle in under 500ms.</p>
 

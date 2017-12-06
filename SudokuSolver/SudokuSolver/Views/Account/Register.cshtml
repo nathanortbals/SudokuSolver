@@ -5,35 +5,27 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>Register</h2>
 
-<div class="form">
-    <center><div class="container">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
+<center>
+    <h2>Register</h2>
 
-            @Html.ValidationSummary("")
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "section" }))
+    {
+        @Html.AntiForgeryToken()
 
-            <label><b>Email:</b></label>
+        @Html.ValidationSummary("")
 
-            @Html.TextBoxFor(m => m.Email, new { placeholder = "Email" })
+        <label>Email:</label> 
+        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email", @class = "loginTextBox"})
 
-            <br />
-            <label><b>Password:</b></label>
+        <label>Password:</label> 
+        @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "loginTextBox" })
 
-            @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+        <label>Confirm Password:</label> 
+        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Re-type password", @class = "loginTextBox" })
 
-            <br />
-            <label><b>Password confirmation:</b></label>
-
-            @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Re-type password" })
-
-            <br />
-            <button type="submit">Register</button>
-
-        }
-    </div></center>
-</div>
+        <button type="submit">Register</button>
+    }
+</center>
 
 

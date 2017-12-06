@@ -5,17 +5,17 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-@using (Html.BeginForm("Play", "Sudoku", FormMethod.Post, new { name = "updateForm", autocomplete = "off" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(Model => Model.ID)
-    @Html.HiddenFor(Model => Model.User)
-    @Html.HiddenFor(Model => Model.UserID)
+<center>
+    @using (Html.BeginForm("Play", "Sudoku", FormMethod.Post, new { name = "updateForm", autocomplete = "off", @class = "section" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(Model => Model.ID)
+        @Html.HiddenFor(Model => Model.User)
+        @Html.HiddenFor(Model => Model.UserID)
 
-    var tbConfig = new { maxlength = "1", size = "2", autocomplete = "off", @onkeyup = "SubmitValidCellValue(event)" };
-    <center>
-        <div>
-            @for (int x = 0; x < Puzzle.SizeX; x++)
+        var tbConfig = new { maxlength = "1", size = "2", autocomplete = "off", @onkeyup = "SubmitValidCellValue(event)", @class = "puzzleTextBox"};
+
+            for (int x = 0; x < Puzzle.SizeX; x++)
             {
                 if ((x != 0) && (x % Puzzle.BlockSize == 0))
                 {
@@ -34,36 +34,22 @@
                     @Html.TextBoxFor(Model => Model.Positions[x * Puzzle.SizeX + y].Value, tbConfig);
                 }
                 <br>
-            }
+        }
 
-        </div>
-    </center>
+        <button type="submit" formaction='@Url.Action("SavePuzzle", "Sudoku")'>Save Puzzle</button>
+        <button type="submit" formaction='@Url.Action("SolvePuzzle", "Sudoku")'>Solve Puzzle</button>
 
-    <center>
-        <table>
-            <tr>
-                <td>
-                    <center>
-                        @if (!Model.IsValid())
-                        {
-                            @Html.Label("Puzzle has errors")
-                        }
-                        else if (Model.IsSolved())
-                        {
-                            @Html.Label("Puzzle is solved!")
-                        }  
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        <input type="submit" class="BigButton" value="Save Puzzle" formaction='@Url.Action("SavePuzzle", "Sudoku")' />
-                        <input type="submit" class="BigButton" value="Solve Puzzle" formaction='@Url.Action("SolvePuzzle", "Sudoku")' />
-                    </center>
-                </td>
-            </tr>
-        </table>
-    </center>
-}
+        if (!Model.IsValid())
+        {
+            <label>Puzzle has errors.</label>
+        }
+        else if (Model.IsSolved())
+        {
+            <label>Puzzle is solved.</label>
+        }
+    }
+</center>
+
 <script>
     function SubmitValidCellValue(event)
 	{

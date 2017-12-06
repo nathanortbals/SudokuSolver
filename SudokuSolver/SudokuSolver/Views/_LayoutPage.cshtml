@@ -8,23 +8,21 @@
 </head>
 
 <body>
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+    <center>
+        @if (User.Identity.IsAuthenticated)
         {
-            @Html.AntiForgeryToken()
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "section" }))
+            {
+                @Html.AntiForgeryToken()
 
-            <button input type="submit" value="LogOff" class="button">Log Off</button>
+                <button input type="submit">Log Off</button>
+            }
         }
-    }
+    </center>
 
-    <div>
-        @RenderBody()
-    </div>
-    <div id="bg">
-        <img src="~/Css/images/bg-sudoku.jpg" alt="">
-    </div>
+    @RenderBody()
+
+    <div id="bg"> <img src="~/Css/images/bg-sudoku.jpg" alt=""> </div>
 </body>
 
 </html>
