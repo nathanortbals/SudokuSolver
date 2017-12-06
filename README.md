@@ -86,4 +86,6 @@ ALTER TABLE [dbo].[Positions]
  
  1. When a Puzzle is deleted, the Puzzle row and all it's positions are deleted.
  
+ ### Video 
  
+ [Link to Video](https://youtu.be/qgDYqHtlc88)
